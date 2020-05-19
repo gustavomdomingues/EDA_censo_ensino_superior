@@ -36,7 +36,7 @@ def main():
 
 	if (pagina == 'Introdução'):
 
-		st.markdown('### O objetivo deste projeto é explorar a base de dados do censo da educação superior de 2018 feito pelo Inep.')
+		st.markdown('### O objetivo deste projeto é explorar a base de dados do censo da educação superior de 2016 feito pelo Inep.')
 		st.write(' --- ')
 		st.markdown('__Utilize o menu à esquerda para navegar por diferentes partes do projeto.__')
 
@@ -47,7 +47,8 @@ def main():
 		st.write('3. Analisar as estatísticas gerais da base de dados utilizando o Jupyter Notebook.')
 		st.write('4. Analisar as estatísticas e conteúdo das variáveis individualmente.')
 		st.write('5. Analisar as características que levaram à conclusão ou ao desvínculo em 2016.')
-		st.write('6. Armazenar o conteúdo do projeto em aplicação Streamlit publicada no Heroku.')
+		st.write('6. Identificar através do PCA (Principal Component Analysis) se existem carcaterísticas que dividem os concluintes dos desvinculados e aprender quais são.')
+		st.write('7. Armazenar o conteúdo do projeto em aplicação Streamlit publicada no Heroku.')
 
 
 	elif (pagina == 'Resultados'):
@@ -55,8 +56,31 @@ def main():
 		st.write("### Resultados")
 
 		st.write('Abaixo estão descritas hipóteses levantadas e validadas durante esta análise.')
-
-		st.write('**Hipótese 1:** Estudantes de cursos de Exatas têm MAIOR taxa de desvínculo.')
+		st.write(' --- ')
+		st.write('**Hipótese 1:** Estudantes de cursos de Exatas têm MAIOR taxa de desvínculo. [NÃO REJEITADA]')
+		st.write('-> As áreas 4 (Ciências,    Matemática e    Computação) e 5 (Engenharia,    Produção e   Construção) foram as áreas com maior taxa de desvínculos, acima de 70% dos estudantes que encerraram atividade em 2016.')
+		st.write(' --- ')
+		st.write('**Hipótese 2:** Estudantes de cursos tecnólogo tem MENOR taxa de desvínculo. [REJEITADA]')
+		st.write('-> A taxa de desvínculos de cursos tecnólogo (3) não é boa (cerca de 65%), mas é similar á taxa dos cursos de bacharelado (1).')
+		st.write(' --- ')
+		st.write('**Hipótese 3:** Estudante do turno noturno tem MAIOR taxa de desvínculo. [REJEITADA]')
+		st.write('-> Em 2016, aproximadamente 65% dos estudantes do turno noturno que encerraram atividade foram por desvínulo. Taxa similar à do turno matutino.')
+		st.write(' --- ')
+		st.write('**Hipótese 4:** Estudantes de instituições particulares tem MAIOR taxa de desvínculo. [NÂO REJEITADA]')
+		st.write('-> Instituições privadas com fins lucrativos tiveram a maior taxa de desvínculos em 2016, cerca de 70%. Seguida por instituições públicas federais.')
+		st.write(' --- ')
+		st.write('**Hipótese 5:** Estudantes negros tem MAIOR taxa de desvínculo. [REJEITADA]')
+		st.write('-> Estudantes indígenas foram os que tiveram taxa muito maior de desvínculos, comparado à outras raças/cor, pouco mais de 80%. Esse resultado pode ser pela baixa amostra de estudantes dessa categoria. O restante das categorias possui taxa similar, cerca de 65%.')
+		st.write(' --- ')
+		st.write('**Hipótese 6:** Estudante com deficiência tem MAIOR taxa de desvínculo. [REJEITADA]')
+		st.write('-> Estudantes com ou sem deficiência possuem taxa de desvínculo de aproximadamente 65%.')
+		st.write(' --- ')
+		st.write('**Hipótese 7:** Estudantes que estudaram o ensino médio em escola pública tem MAIOR taxa de desvínculo. [REJEITADA]')
+		st.write('-> A quantidade de estudantes que estudaram em escola particular é muito maior, mas a taxa é muito similar, cerca de 65%.')
+		st.write(' --- ')
+		st.write('**Hipótese 8:** Estudante de cursos à distência tem MAIOR taxa de desvínculo. [NÂO REJEITADA]')
+		st.write('-> A quantidade de estudantes que estudaram de forma presencial é muito maior, mas a taxa de desvínculos de estudante à distância que é maior, cerca de 70% comparado com 65%.')
+		st.write(' --- ')
 
 	elif (pagina == 'Ferramentas Utilizadas'):
 		
@@ -140,10 +164,10 @@ def main():
 
 		st.write("Meu objetivo é entender quais características impactam na não conclusão do curso. Resolvi analisar a populção de estudantes que se desligaram de sua instituição em 2016 e averiguar as taxas de concluintes e de desvínculos.")
 		st.write(' --- ')
-		opcoes_feature = ['Area de estudo', 'Turno', 'Grau academico', 'Modalidade de ensino', 'Raça', 'Sexo', 'Deficiência/Superdotação', 'Baixa renda', 'Escola que cursou o ensino medio']
+		opcoes_feature = ['Area de estudo', 'Turno', 'Grau academico', 'Modalidade de ensino', 'Raça', 'Sexo', 'Deficiência/Superdotação', 'Baixa renda', 'Escola que cursou o ensino medio', 'Particular/Pública']
 		feature_escolhido = st.selectbox("Escolha uma feature:", opcoes_feature)
 		
-		dicionario = {'Turno': 'CO_TURNO_ALUNO', 'Area de estudo': 'CO_OCDE_AREA_GERAL', 'Grau academico': 'CO_GRAU_ACADEMICO', 'Modalidade de ensino': 'CO_MODALIDADE_ENSINO', 'Raça': 'CO_COR_RACA_ALUNO', 'Sexo': 'IN_SEXO_ALUNO', 'Deficiência/Superdotação': 'IN_ALUNO_DEF_TGD_SUPER', 'Baixa renda': 'IN_RESERVA_RENDA_FAMILIAR', 'Escola que cursou o ensino medio':'CO_TIPO_ESCOLA_ENS_MEDIO'}
+		dicionario = {'Turno': 'CO_TURNO_ALUNO', 'Area de estudo': 'CO_OCDE_AREA_GERAL', 'Grau academico': 'CO_GRAU_ACADEMICO', 'Modalidade de ensino': 'CO_MODALIDADE_ENSINO', 'Raça': 'CO_COR_RACA_ALUNO', 'Sexo': 'IN_SEXO_ALUNO', 'Deficiência/Superdotação': 'IN_ALUNO_DEF_TGD_SUPER', 'Baixa renda': 'IN_RESERVA_RENDA_FAMILIAR', 'Escola que cursou o ensino medio':'CO_TIPO_ESCOLA_ENS_MEDIO', 'Particular/Pública': 'CO_CATEGORIA_ADMINISTRATIVA'}
 
 		if (feature_escolhido in opcoes_feature):
 
@@ -184,7 +208,16 @@ def main():
 
 		st.write('Algumas possíveis melhorias que não executei ainda neste projeto:')
 
-		st.write('1. Ler detalhadamente o dicionários de dados.')
+		st.write('1. Carregar as descrições nos gráficos de análise, fica difícil ler as categorias como números.')
+		st.write('2. Usar informações da base de IES para entender como investimentos e corpo docente podem influenciar na taxa de desvínculos e na própria receita da IES.')
+		st.write('3. Criar uma base unificada com dados de todos os anos, para assim entender como as atividades realizadas dentro da universidade podem influenciar no diploma ou no desvínculo.')
+		st.write('4. Construir um modelo para predizer se um estudante em um determinado momento tem altas chances de se desvincular, permitindo assim à IES tomar alguma atitude.')
+		st.write('5. Construir um modelo para clusterizar as IES com melhor taxa de concluintes e identificar suas principais características.')
+		st.write('6. Construir um modelo para sugerir características de estudantes adequados (que mais se formam) para cada IES.')
+
+		
+				
+		
 		
 	
 
